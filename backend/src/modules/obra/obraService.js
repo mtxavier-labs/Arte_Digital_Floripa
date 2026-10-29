@@ -48,18 +48,7 @@ async function criarObra(dados) {
         throw erro;
     }
 
-    if (dados.idUsuario !== undefined && dados.idUsuario !== null) {
-        parseId(dados.idUsuario, 'idUsuario');
-        const usuarioExiste = await prisma.usuario.findUnique({
-            where: { id_usuario: parseInt(dados.idUsuario) }
-        });
-        if (!usuarioExiste) {
-            const erro = new Error('Usuário não encontrado');
-            erro.statusCode = 404;
-            throw erro;
-        }
-    }
-
+    
     if (dados.autoresIds && dados.autoresIds.length) {
         const idsValidos = dados.autoresIds.every(id => !Number.isNaN(parseInt(id)));
         if (!idsValidos) {
@@ -151,17 +140,6 @@ async function atualizarObra(id, dados) {
         throw erro;
     }
 
-    if (dados.idUsuario !== undefined && dados.idUsuario !== null) {
-        parseId(dados.idUsuario, 'idUsuario');
-        const usuarioExiste = await prisma.usuario.findUnique({
-            where: { id_usuario: parseInt(dados.idUsuario) }
-        });
-        if (!usuarioExiste) {
-            const erro = new Error('Usuário não encontrado');
-            erro.statusCode = 404;
-            throw erro;
-        }
-    }
 
     if (dados.autoresIds && dados.autoresIds.length) {
         const idsValidos = dados.autoresIds.every(id => !Number.isNaN(parseInt(id)));
